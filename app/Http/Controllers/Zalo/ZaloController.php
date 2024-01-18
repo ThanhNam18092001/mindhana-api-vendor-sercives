@@ -47,7 +47,6 @@ class ZaloController extends Controller
         }
     }
 
-
     public function accessTokenByRefresh(Request $request)
     {
         $curl = curl_init();
@@ -288,7 +287,6 @@ class ZaloController extends Controller
         }
     }
 
-    
     public function updateFollowerInfo(Request $request)
     {
         $curl = curl_init();
