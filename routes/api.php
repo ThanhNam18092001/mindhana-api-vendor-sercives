@@ -32,21 +32,21 @@ Route::get('/get-invoice', [InvoiceController::class, 'getTransactionStatus']);
 
 
 // Zalo
-Route::get('/access-token', [ZaloController::class, 'accessToken']);
+Route::get('/access-token', [ZaloController::class, 'accessToken']); // Done
 
-Route::get('/access-token-by-refresh', [ZaloController::class, 'accessTokenByRefresh']); //
+Route::post('/access-token-by-refresh', [ZaloController::class, 'accessTokenByRefresh']); // Done
 
-Route::get('/list-of-interested-customers', [ZaloController::class, 'getOfInterestedListCustomer']); // 
+Route::get('/list-of-interested-customers', [ZaloController::class, 'getOfInterestedListCustomer']); // Done
 
-Route::get('/send-message', [ZaloController::class, 'sendMessage']); //
+Route::post('/send-message', [ZaloController::class, 'sendMessage']);
 
-Route::get('/request-user-info', [ZaloController::class, 'requestUserInfo']);
+Route::post('/request-user-info', [ZaloController::class, 'requestUserInfo']); //Done
 
-Route::get('/get-user-profile', [ZaloController::class, 'getUserProfile']);
+Route::post('/get-user-profile', [ZaloController::class, 'getUserProfile']); //Done
 
-Route::get('/update-follower-info', [ZaloController::class, 'updateFollowerInfo']);
+Route::post('/update-follower-info', [ZaloController::class, 'updateFollowerInfo']);
 
-Route::get('/get-list-infomation-zalo', [ZaloController::class, 'getListInfomationZalo']);//
+Route::get('/get-list-infomation-zalo', [ZaloController::class, 'getListInfomationZalo']);// Done
 
 // Zns
-Route::get('/send-zalo-message', [ZnsController::class, 'sendZaloMessage']);
+Route::post('/send-zalo-message', [ZnsController::class, 'sendZaloMessage']); // Done

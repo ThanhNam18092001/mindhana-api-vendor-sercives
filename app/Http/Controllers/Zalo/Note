@@ -1,3 +1,91 @@
-access_token: VCqDSttqv0XwoWzrUFFW37ZF3NHxwwXk9D0-JKo8fJTFoXqrBPU5BMge6GiqnePnOvOkTIJeWsfUesfgGipbRG2gJ6H-uw11BOvADYx0tnLSh7HfFSJJTZYvGLTjmjzj7Qni5cIJuWeMz70GRilZEcgBIKCB-UDbLwK8OJ3LvXv4dLez3ARK2stwFG0elRCg8VmB5I6o-oDXZ1TSCxwFLM7XDa4bdgzRNz4mLp61l2bs_XCh8OQxDrJWCou6ajyg1T5wANoSxZO_us5LFORVUbJWU5m8XT9rITKxR1EtXH9EzJfaF9cnQK_S0NO7cxzzK-CoOmU6fLz5zJvG4QcMMLB71L8HuBCjROizBcZGXYSNYnm0H-Bp1Y-wPHvAyS1X7eXGIMVNmsKtldbQHC6TPYE1TMHnCGhTJddfuGq
+access_token: b2LZ6NcYM46I8c4VVALSHP0dOnv_lGCip5bEC5Y_6sgpVqDC59WOTx5U8MmBtMeocGKG43A7Q0YaUZKlFAXE2eubE0abu7v9iW8-UmJROLoI3XHW1EXvUve8920eZ40Qi7ujEIcuPX2XRriuJweROjbcTrfBd01ZmKfAV36y72VURMjyIB4nLSTSTrrCtYjJfILzKZ_N64Yb1YGMDVD2DRqDE0yDxNyRdc1781AH6HIYTd8l1Pe53OjnGoaCl2TreL9wKns39L-pMXbNEQ1K3wXyQGawdnS6qa1DB4Y1DWl3H6yjQBvKTU9_BbuBh4X4cIyF7YBwT039U48V99LrA95FGYCBo0O_i0nCEHpiCGEu3su0BUmv3hvrU5HNz4vO_X82G56VD4IvSd0V0PGE1KnftRGFRNs_NKG
 secret_key: j19i1v0wH767NYvMYe55
 app_id: 1003456463332716062
+
+- Gửi API để lấy oa access token từ authorization code
+  Url: https://developers.zalo.me/docs/official-account/bat-dau/xac-thuc-va-uy-quyen-cho-ung-dung-new
+  header: 
+  + secret_key: Khóa bí mật của ứng dụng. 
+  Body: 
+  + code: Authorization code mà bạn nhận được ở bước 3
+  + app_id:  ID của ứng dụng
+  + grant_type: . Thuộc tính cho biết thông tin để tạo access token. 
+                . Giá trị nhận vào: authorization_code: tạo access token từ authorization code.
+  + code_verifier: Code verifier được dùng để tạo code challenge ở bước 2.
+
+- Dùng Refresh Token để lấy Access Token
+  Url: https://developers.zalo.me/docs/official-account/bat-dau/xac-thuc-va-uy-quyen-cho-ung-dung-new
+  header: 
+  + secret_key: Khóa bí mật của ứng dụng. 
+  Body: 
+  + refresh_token: Refresh token dùng để tạo access token mới.
+  + app_id: ID của ứng dụng.
+  + grant_type: . Thuộc tính cho biết thông tin để tạo access token. 
+                . Giá trị nhận vào: refresh_token: tạo access token từ refresh token.
+
+- Lấy danh sách khách hàng quan tâm OA
+  Url: https://developers.zalo.me/docs/official-account/quan-ly/quan-ly-thong-tin-nguoi-dung/lay-danh-sach-khach-hang-quan-tam-oa
+  header: 
+  + access_token: Token cho phép ứng dụng đại diện OA gọi API.
+  Body: 
+  + offset: Thứ tự của người quan tâm đầu tiên trong danh sách trả về.
+  + count: . Số lượng người quan tâm muốn lấy.
+          . Lưu ý: tối đa 50 người quan tâm 1 request.
+
+- Lấy thông tin khách hàng quan tâm OA
+  Url: https://developers.zalo.me/docs/official-account/quan-ly/quan-ly-thong-tin-nguoi-dung/lay-thong-tin-khach-hang-quan-tam-oa
+  header: 
+  + access_token: Token cho phép ứng dụng đại diện OA gọi API.
+
+- Gửi tin nhắn văn bản đến người dùng ẩn danh
+  Url: https://developers.zalo.me/docs/official-account/tin-nhan/cac-loai-tin-khac/gui-tin-nhan-van-ban-den-nguoi-dung-an-danh
+  header: 
+  + access_token: Token cho phép ứng dụng đại diện OA gọi API.
+  Body: 
+  + recipient: Thông tin người nhận
+    . anonymous_id: Id đại diện cho người dùng ẩn danh.
+    . conversation_id: Id của cuộc hội thoại.
+  + message: Nội dung cần gửi
+    . text: Nội dung văn bản gửi cho người dùng. Giới hạn tối đa là 2000 kí tự.
+
+- Gửi tin Tư vấn theo mẫu yêu cầu thông tin người dùng
+  Url: https://developers.zalo.me/docs/official-account/tin-nhan/tin-tu-van/gui-tin-tu-van-theo-mau-yeu-cau-thong-tin-nguoi-dung
+  header: 
+  + access_token: Token cho phép ứng dụng đại diện OA gọi API. 
+  Body: 
+  + recipient: Thông tin người nhận
+      user_id: ID của người nhận (nhận được thông qua API lấy thông tin người quan tâm, API lấy danh sách người quan tâm)
+  + message: Nội dung cần gửi
+      attachment: Attachment cần gửi
+        type: Loại attachment Giá trị nhận vào bắt buộc: type = template
+        payload: Chứa payload của attachment muốn gửi.
+            template_type: Loại template Giá trị nhận vào: template_type = request_user_info
+            elements: Chứa các đối tượng của template.Lưu ý: Cấu trúc element thay đổi tùy theo loại template.. Với template request_user_info, danh sách element bao gồm tối đa 1 phần tử.
+                title: Tiêu đề hiển thị của templateLưu ý: Hỗ trợ tối đa 100 ký tự
+                subtitle: Tiêu đề phụ của templateLưu ý: Hỗ trợ tối đa 500 ký tự
+                image_url: Đường dẫn đến ảnh
+
+- Cập nhật thông tin khách hàng quan tâm OA
+  Url: https://developers.zalo.me/docs/official-account/quan-ly/quan-ly-thong-tin-nguoi-dung/cap-nhat-thong-tin-khach-hang-quan-tam-oa
+  header: 
+    + access_token: Token cho phép ứng dụng đại diện OA gọi API. 
+  Body: 
+    + user_id: ID của người quan tâm cần thay đổi thông tin.
+    + name: Tên cập nhật
+    + phone: Số điện thoại cập nhật
+    + address: Địa chỉ cập nhật
+    + city_id: Mã tỉnh, thành phố trực thuộc trung ương.
+    + district_id: Mã quận, huyện, thành phố trực thuộc tỉnh.
+
+- Gửi ZNS
+  Url: https://developers.zalo.me/docs/zalo-notification-service/gui-tin-zns/gui-zns
+  header: 
+  + access_token: Đoạn mã cần truyền vào để xác minh quyền sử dụng API.
+  Body: 
+  + phone: SĐT của người nhận.
+          Lưu ý: SĐT phải được liên kết với tài khoản Zalo và được viết ở định dạng chuẩn hóa theo mã quốc gia. (VD: SĐT 0987654321 viết theo định dạng chuẩn hóa của Việt Nam là 84987654321 hoặc +84987654321)
+  + template_id: ID của template muốn sử dụng. template_id sẽ được phía Zalo cung cấp riêng cho từng đối tác.
+  + template_data: 	Các thuộc tính của template mà đối tác đã đăng ký với Zalo. 
+                    Lưu ý: Cấu trúc template_data được quy định riêng ứng với từng template.
+  + tracking_id: Mã số đánh dấu lần gọi API của đối tác, do đối tác định nghĩa. Đối tác có thể dùng tracking_id để đối soát mà không phụ thuộc vào message_id của Zalo cung cấp.
+                Lưu ý: Zalo khuyến khích sử dụng tham số có độ dài tối đa 48 ký tự và không chứa kí tự đặc biệt.

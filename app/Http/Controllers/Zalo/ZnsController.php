@@ -7,25 +7,25 @@ use Illuminate\Http\Request;
 
 class ZnsController extends Controller
 {
-    public function sendZaloMessage()
+    public function sendZaloMessage(Request $request)
     {
         $curl = curl_init();
 
-        $phoneNumber = '0392525473';
+        $phoneNumber = $request->input('phone');
         $phoneNumberWithPrefix = '84' . substr($phoneNumber, 1);
 
         $data = array(
             "phone" => $phoneNumberWithPrefix,
-            "template_id" => "309018",
+            "template_id" => $request->input('template_id'),
             "template_data" => array(
-                "customer_name" => "Nam",
-                "booking_code" => "BK00001",
-                "schedule_time" => "18/01/2024",
-                "address" => "hcm"
+                "customer_name" => $request->input('customer_name'),
+                "booking_code" => $request->input('booking_code'),
+                "schedule_time" => $request->input('schedule_time'),
+                "address" => $request->input('address')
             ),
             // "tracking_id" => "tracking_id",
         );
-
+        $accessToken = isset($_SERVER['HTTP_ACCESS_TOKEN']) ? $_SERVER['HTTP_ACCESS_TOKEN'] : '';
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://business.openapi.zalo.me/message/template",
             CURLOPT_RETURNTRANSFER => true,
@@ -37,7 +37,7 @@ class ZnsController extends Controller
             CURLOPT_POSTFIELDS => json_encode($data),
             CURLOPT_HTTPHEADER => array(
                 "Content-Type: application/json",
-                "access_token: IFVBC5TfY5TEyCasKcwCKqpropTHTiyE4ABmP5avxbK1z_XAIoxaToB1eXrc8k43FTVG4oCgYYT7yymP6Y_E9d3Dp0GcDU8SVS736mCDypjwoyKvPLxbKtg7eL0TVuziKPsWN1zXhZzV-Ua606JG66gJzZ09JEK9QQJG3HPFn1LcqC9s9nd2RdZLz4ex8jOkGhlnEXTkvIfHigC1DaQ3OrUJW5uL2QXlVCABIoi4ioWfqFqyV33IFJhsbbTm6hatF8Aj06aSe1KEsUOLJaRb7WxSt0jG6z4iIE_pAW44mqqSoiGo0ZtGBX_Rm0zzDuyxADdDNYen-tjYq-Td94lSJ3-lnoTWQ8OuEesM3ZXYbMLGYgnwFK7eJbVUzNv1FBfj8jQyMMKoXa85ofbXGpAST1lDk4ilhNTIKtIDKW",
+                "access_token: $accessToken",
             ),
         ));
 
